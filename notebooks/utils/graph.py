@@ -15,6 +15,8 @@ class Graph:
         ax.despine(left=True)
         plt.xticks(rotation=45)
         plt.ylim(lim_min, lim_max)
+
+        plt.savefig(f"imgs/{title}.png", dpi=300, bbox_inches='tight')
         plt.show()
 
     def create_graph_line(self, df, title, col_x, col_y, x_label, y_label, lim_min, lim_max):
@@ -22,13 +24,15 @@ class Graph:
 
         for ind, safra in enumerate(list(sorted(set(df[col_x].values)))):
             value = df[df[col_x] == safra][col_y].values[0]
-            ax.ax.text(ind, value, f'{value:.2f}', backgroundcolor='white', color='black', ha='center', va='center')
+            ax.ax.text(ind, value, f'{value:.2f}', backgroundcolor='white', color='black', ha='center', va='center', fontsize=12)
 
         ax.set(xlabel=x_label, ylabel=y_label)
         plt.title(title)
         ax.despine(left=True)
         plt.xticks(rotation=45)
         plt.ylim(lim_min, lim_max)
+
+        plt.savefig(f"imgs/{title}.png", dpi=300, bbox_inches='tight')
         plt.show()
 
     def create_graph_bar(self, df, col_x, col_y, x_label, y_label, title):
@@ -38,29 +42,29 @@ class Graph:
         plt.title(title)
 
         for index, row in df.iterrows():
-            aux.text(row.name, row[col_y], row[col_y], color='black', ha="center")
+            aux.text(row.name, row[col_y], row[col_y], color='black', ha="center", fontsize=12)
+        plt.savefig(f"imgs/{title}.png", dpi=300, bbox_inches='tight')
 
         plt.show()
 
-    def create_graph_multi_bar(self, df, col_x, col_hue, col_value, x_label, y_label, title, legend, ordened=False, cols_ordened=[]):
+    def create_graph_multi_bar(self, df, col_x, col_hue, col_value, x_label, y_label, title, legend, ordened=False,
+                               cols_ordened=[]):
         df_plot = df.pivot(index=col_x, columns=col_hue, values=col_value)
 
-        # if ordened == True:
-        #     df_plot = df_plot.sort_values(cols_ordened), ascending=False)
+        if ordened and cols_ordened:
+            df_plot = df_plot.loc[cols_ordened]
 
-        # Criar gráfico
-        ax = df_plot.plot(kind='bar', figsize=(15, 7), width=0.9)
+        ax = df_plot.plot(kind='barh', figsize=(12, 10), width=0.8)
 
-        # Adicionar título e eixos
-        ax.set_xlabel(x_label)
-        ax.set_ylabel(y_label)
+        ax.set_ylabel(x_label)
+        ax.set_xlabel(y_label)
         ax.set_title(title)
         ax.legend(title=legend)
-        ax.set_xticklabels(df_plot.index, rotation=45, ha='right')
+        ax.set_yticklabels(df_plot.index, rotation=0, ha='right')
 
-        # Adicionar valores nas barras
         for container in ax.containers:
-            ax.bar_label(container, padding=3, fontsize=9)
+            ax.bar_label(container, padding=3, fontsize=12)
 
         plt.tight_layout()
+        plt.savefig(f"imgs/{title}.png", dpi=300, bbox_inches='tight')
         plt.show()
