@@ -1,6 +1,7 @@
 # Case: Grupo Boticário (Cientista de Dados)
 
-Este projeto tem como objetivo realizar a análise do comportamento dos produtos similares quando o produto principal entra em ruptura. Além disso realizar a estimativa de venda caso aquele produto não tivesse tido ruptura.
+- Este projeto tem como objetivo realizar a análise do comportamento dos produtos similares quando o produto principal entra em ruptura.
+- Realizar a estimativa de venda caso aquele produto não tivesse tido ruptura.
 ---
 
 ## Estrutura do Projeto
